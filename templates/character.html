@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Personagem</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="bg-dark text-white text-center py-4">
+        <h1>Detalhes do Personagem</h1>
+    </header>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div id="characterDetails">
+                    <!-- As informações do personagem serão carregadas aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtém o ID do personagem da URL
+            const params = new URLSearchParams(window.location.search);
+            const characterId = params.get('id');
+
+            // Endpoint GET para obter todos os personagens
+            const endpoint = 'https://hp-api.onrender.com/api/characters';
+
+            // Referência ao elemento do DOM onde os detalhes do personagem serão exibidos
+            const characterDetails = document.getElementById('characterDetails');
+
+            // Função para preencher os detalhes do personagem
+            function fillCharacterDetails(character) {
+                if (character) {
+                    characterDetails.innerHTML = `
+                        <div class="card">
+                            <div class="card-body">
+                                <img src="${character.image}" class="img-thumbnail rounded-circle mx-auto d-block mb-3" alt="${character.name}">
+                                <h2 class="card-title text-center">${character.name}</h2>
+                                <p class="text-center">ID: ${character.id}</p>
+                                <table class="table table-striped table-hover">
+                                    <tr>
+                                        <th>Espécie</th>
+                                        <td>${character.species}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Gênero</th>
+                                        <td>${character.gender}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Cor do Cabelo</th>
+                                        <td>${character.hairColour}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Cor dos Olhos</th>
+                                        <td>${character.eyeColour}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ator</th>
+                                        <td>${character.actor}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    characterDetails.innerHTML = '<p>Personagem não encontrado.</p>';
+                }
+            }
+
+            // Faz uma solicitação para obter todos os personagens
+            axios.get(endpoint)
+                .then(response => {
+                    const characters = response.data;
+
+                    // Filtra a lista de personagens pelo ID
+                    const character = characters.find(char => char.id === characterId);
+
+                    fillCharacterDetails(character);
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar detalhes do personagem', error);
+                    characterDetails.innerHTML = '<p>Erro ao carregar detalhes do personagem.</p>';
+                });
+        });
+    </script>
+</body>
+</html>

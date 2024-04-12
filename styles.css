@@ -1,0 +1,49 @@
+/* Personalize como desejar */
+body{
+backcgroundColor:red;
+}
+.card {
+    border: none;
+}
+
+.card-header {
+    background-color: #007BFF;
+}
+
+.card-header h2 button {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.card-header h2 button:hover {
+    text-decoration: underline;
+}
+
+.card-body {
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.card-body img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.table th {
+    background-color: #007BFF;
+    color: white;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #cce5ff;
+}
